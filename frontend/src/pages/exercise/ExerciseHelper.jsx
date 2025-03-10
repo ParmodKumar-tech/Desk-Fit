@@ -29,7 +29,7 @@ export function ExerciseHelper(){
 
     }
     
-    if(!exerciseInfo) return <h4 style={{textAlign:'center'}}>Loading...</h4>
+       if(!exerciseInfo) return <div  style={{textAlign:'center', width:'100%', height:'100%'}}><h2>Loading...</h2></div>
 
     return(
         <div className='font-medium flex flex-col justify-end mx-auto p-4 lg:w-[50%] sm:w-[70%]'>
