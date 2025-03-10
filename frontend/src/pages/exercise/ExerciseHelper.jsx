@@ -29,7 +29,7 @@ export function ExerciseHelper(){
 
     }
     
-    if(!exerciseInfo) return <div  className='text-center p-16 h-full text-2xl font-bold'><h1>Loading...</h1></div>
+    if(!exerciseInfo) return <div  className='text-center p-20 h-full text-2xl font-bold'><h1>Loading...</h1></div>
 
     return(
         <div className='font-medium flex flex-col justify-end mx-auto p-4 lg:w-[50%] sm:w-[70%]'>
