@@ -15,16 +15,16 @@ function ExerciseCard(){
 
 
     let fetchExercises=async()=>{
-        await axios.get(`${RESOURCE_API_END_POINT}`)
-        .then((res)=>{
-            if(res.data.success){
+
+        try{
+        const res=await axios.get(`${RESOURCE_API_END_POINT}`)
+                if(res.data.success){
                 setIsExercise(res.data.data);
-            }
-           
-        })
-        .catch((e)=>{
-            toast.error(e.message);
-        })
+            }    
+        }
+        catch(error){
+            toast.error(error.message);
+        }
     }
 
     
