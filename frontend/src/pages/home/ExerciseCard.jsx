@@ -18,7 +18,6 @@ function ExerciseCard(){
         await axios.get(`${RESOURCE_API_END_POINT}`)
         .then((res)=>{
             if(res.data.success){
-                console.log(res.data);
                 setIsExercise(res.data.data);
             }
            
