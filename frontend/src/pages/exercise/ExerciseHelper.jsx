@@ -18,7 +18,6 @@ export function ExerciseHelper(){
     const getExerciseInfo=async()=>{
         try{
             const res=await axios.get(`${RESOURCE_API_END_POINT}/exercise-info/${id}`)
-            console.log(res.data);
             if(res.data.success){
                 setExerciseInfo(res.data.data);                    
             }
