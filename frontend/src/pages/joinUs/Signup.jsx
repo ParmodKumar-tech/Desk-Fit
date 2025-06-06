@@ -11,26 +11,29 @@ import { USER_API_END_POINT } from '../../utils/EndPoint';
 function Signup() {
     
     const [loading,setLoading]=useState(false);
-    const {setCurrentUser}=useAuth();
+    const {setCurrentUserId,setCurrentUserEmail}=useAuth();
     const navigate=useNavigate();
 
     let handleForm=async(formData)=>{
         setLoading(true);
         try{
-            const res=await axios.post(`${USER_API_END_POINT}/signup`,formData)
+            const res=await axios.post(`${USER_API_END_POINT}/signup`,formData,{withCredentials:true})
         
             if(res.data.success){
                     toast.success(res.data.message);
                     localStorage.setItem("token",res.data.token);
                     localStorage.setItem("userId",res.data.userId);
+                    localStorage.setItem("emailId",res.data.useremail);
                     localStorage.setItem("username",res.data.username);
-                    setCurrentUser(res.data.userId);
+                    setCurrentUserId(res.data.userId);
+                    setCurrentUserEmail(res.data.useremail);
+
                     navigate('/');
             }
             setLoading(false);
         }
         catch(error){
-            toast.error(e.response.data.message); 
+            toast.error(error.response.data.message); 
             setLoading(false);
         }
           
@@ -78,8 +81,8 @@ function Signup() {
             </div>
             <Field  id="password" className='rounded p-1 border border-blue-500 my-2' type="password" name="password" placeholder='password' />
 
-            <button disabled={loading} className='rounded bg-black text-white p-1 my-1 font-semibold' type='submit'>{loading?"Loading...":"Sign up"}</button>
-            <Link to={"/login"} >Already have an account, <span className='text-decoration-line: underline'>Login</span></Link>
+            <button disabled={loading} className='rounded bg-[#0077ff] text-white p-1 my-1 font-semibold' type='submit'>{loading?"Loading...":"Sign up"}</button>
+            <Link to={"/login"} >Already have an account, <span className='text-decoration-line: underline font-bold'>Login</span></Link>
             
             </Form>
         </div>

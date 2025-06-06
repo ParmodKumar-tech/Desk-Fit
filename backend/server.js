@@ -15,7 +15,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/api/v1/",ExerciseRoute);
-app.use("/api/v1/user",UserRoute);
+app.use("/api/v1/user/",UserRoute);
 
 app.use("*",(req,res,next)=>{
     const err=new CustomError(404,"Page Not Found!");

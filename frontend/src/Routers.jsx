@@ -8,15 +8,16 @@ import AddExercisePage from './pages/addExercise/AddExercisePage';
 import HomePage from './pages/home/HomePage';
 import { ExerciseHelper } from './pages/exercise/ExerciseHelper';
 
+
 const PageRoutes=()=>{
-    const {currentUser,setCurrentUser}=useAuth();
+    const {currentUserId,setCurrentUserId}=useAuth();
     const navigate=useNavigate();
     
     useEffect(()=>{
         const userIdFromStorage=localStorage.getItem("userId");
 
-        if(userIdFromStorage && !currentUser){
-            setCurrentUser(userIdFromStorage);
+        if(userIdFromStorage && !currentUserId){
+            setCurrentUserId(userIdFromStorage);
         }
 
         if(!userIdFromStorage && window.location.pathname=="/exercise"){
@@ -25,7 +26,7 @@ const PageRoutes=()=>{
         if(userIdFromStorage && window.location.pathname=='/login'){
             navigate("/")
         }
-    },[currentUser,navigate,setCurrentUser]); // if any of these value is change , it do reload...
+    },[currentUserId,navigate,setCurrentUserId]); // if any of these value is change , it do reload...
 
     let elements=useRoutes([
         {path:'/', element:<HomePage/>},

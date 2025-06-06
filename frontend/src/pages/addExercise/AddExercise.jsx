@@ -38,7 +38,7 @@ export default function AddExercise() {
         }
 
         try {
-           const res=await axios.post(`${RESOURCE_API_END_POINT}/exercise`,formData);
+           const res=await axios.post(`${RESOURCE_API_END_POINT}/exercise`,formData,{withCredentials:true});
             if(res.data.success){
                 toast.success("Exercise Add Succesfully!");
                 nagivate("/");
@@ -79,6 +79,7 @@ export default function AddExercise() {
 
     return (
         <div className='w-full flex items-center justify-center p-14 '>
+            
             <div className="font-medium w-full lg:w-[60%] h-auto border rounded border-black p-4 flex flex-col justify-start my-4">
                 <h1 className="bold text-2xl text-center  underline underline-offset-auto">Add Exercise Information</h1>
                 <div className='w-[90%] mx-auto'>
@@ -399,6 +400,7 @@ export default function AddExercise() {
                 </Formik>
                 </div>
             </div>
+        
         </div>
     );
 }

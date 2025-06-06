@@ -15,7 +15,7 @@ export const login=async (req, res) => {
         return res.status(401).json({ success:false, message:"Incorrect password. Please try again." });
       }
       const token = jwt.sign({ id: isNewUser._id }, "fine");
-      res.status(200).json({ success:true, token, userId: isNewUser._id, username: isNewUser.username,message: "Login successful!" });
+      res.status(200).json({ success:true, token, userId: isNewUser._id, username: isNewUser.username,useremail:isNewUser.email,message: "Login successful!" });
 
   }
 
@@ -30,6 +30,6 @@ export const signup=async(req,res)=>{
           const hashedPassword= await bcrypt.hash(password,salt);
           const newUser=await User.create({username,email,password:hashedPassword});
           const jwtToken=jwt.sign({id:newUser._id},"cool",{expiresIn:"1h"});
-          return res.status(200).json({success:true, message:"Signup Successfully!",token:jwtToken,username:newUser.username,userId:newUser._id});
+          return res.status(200).json({success:true, message:"Signup Successfully!",token:jwtToken,username:newUser.username,useremail:newUser.email,userId:newUser._id});
      
   }

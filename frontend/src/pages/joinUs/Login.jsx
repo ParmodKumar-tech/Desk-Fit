@@ -5,27 +5,31 @@ import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Formik,Form,ErrorMessage,Field} from 'formik';
 import * as Yup from 'yup';
-import { useAuth } from '../../authContent';
 import { USER_API_END_POINT } from '../../utils/EndPoint';
+import { useAuth } from '../../authContent';
 
 function Login() {
 
     const nagivate=useNavigate();
  
     const [loading,setLoading]=useState(false);
-    const {setCurrentUser}=useAuth();
+    const {setCurrentUserId,setCurrentUserEmail}=useAuth();
 
     let handleForm=async(formData)=>{
         setLoading(true);
 
         try{
-            const res=await axios.post(`${USER_API_END_POINT}/login`,formData);
-        
+            const res=await axios.post(`${USER_API_END_POINT}/login`,formData,{withCredentials:true});
+                
                 if(res.data.success){
                     localStorage.setItem("token",res.data.token);
                     localStorage.setItem("userId",res.data.userId);
                     localStorage.setItem("username",res.data.username);
-                    setCurrentUser(res.data.userId);
+                    localStorage.setItem("emailId",res.data.useremail);
+
+                    setCurrentUserId(res.data.userId);
+                    setCurrentUserEmail(res.data.useremail);
+
                     toast.success(res.data.message);
                     nagivate('/')
                     
@@ -71,8 +75,8 @@ function Login() {
             </div>
             <Field id="password"  className='rounded p-1 border border-blue-500 my-2' type="password" name="password" placeholder="password" />
             
-            <button disabled={loading} className=' my-1 rounded bg-black text-white p-1 font-semibold' type='submit'>{loading?"Loading...":"Login"}</button>
-            <Link to={"/signup"} >New User, <span className='text-decoration-line: underline'>Register Now!</span></Link>
+            <button disabled={loading} className=' my-1 rounded bg-[#0077ff] text-white p-1 font-semibold' type='submit'>{loading?"Loading...":"Login"}</button>
+            <Link to={"/signup"} >New User, <span className='text-decoration-line: underline font-bold'>Register Now!</span></Link>
             </Form>
         </div>
         )}

@@ -4,15 +4,17 @@ import { useAuth } from '../authContent';
 import './Navbar.css';  
 
 function Navbar(){
-    const currUsername=localStorage.getItem("username");
     const [menuItems,setMenuItems]=useState(false);
-    const {setCurrentUser}=useAuth();
+    const {currentUserName,setCurrentUserName}=useAuth();
 
     const handleLogout=()=>{
         localStorage.removeItem("token");
+        localStorage.removeItem("emailId");
         localStorage.removeItem("userId");
         localStorage.removeItem("username");
+        
         setCurrentUser(null);
+        setCurrentUserName(null);
         window.location.reload();
     }
 
@@ -29,15 +31,22 @@ function Navbar(){
                 
                 <li><NavLink to="/">Home</NavLink></li>
                 
+                
+                {currentUserName?
+                <>
                 <li><NavLink to="/exercise" >Add Exercise</NavLink></li>
-                {currUsername?
-                <li onClick={handleLogout}><NavLink to="/login">Logout</NavLink></li>:
+                <li><NavLink to="/edit-delete">Edit/Delete</NavLink></li>
+                <li onClick={handleLogout}><NavLink to="/login">Logout</NavLink></li>
+                </>
+                :
+                
                 <li><NavLink to="/signup">Join Us</NavLink></li>
+                
                 }
                     
                 <p className='separator my-auto font-bold'>|</p>
                 <p className='username align-middle my-auto mx-2'>
-                {currUsername?currUsername:"Not login"}</p>
+                {currentUserName?currentUserName:"Not login"}</p>
 
             </ul>
 

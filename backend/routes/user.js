@@ -12,5 +12,4 @@ router
     .route("/login")
     .post(wrapAsync(login))    
 
-
 export default router;   
