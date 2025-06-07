@@ -24,7 +24,7 @@ function Navbar(){
     }
 
     return(
-       <header className='header flex bg-zinc-800 w-full h-[10vh] p-2 z-10 items-center justify-around xl:justify-between px-10'>
+       <header className='header flex bg-zinc-800 w-full p-5 z-10 items-center justify-around xl:justify-between px-10'>
         <Link to="/"><h2 className='font-bold text-3xl mx-2'>DeskFit</h2></Link>
         <nav className={menuItems?"nav-visible":"nav"}>
             <ul className='nav-items'>

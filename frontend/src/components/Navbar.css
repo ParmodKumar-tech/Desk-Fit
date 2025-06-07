@@ -63,8 +63,8 @@
 @media((min-width:100px) and (max-width:639px)){
 
     .header{
-       
-        position: sticky;
+        
+        position: fixed;
         top: 0;
         right: 0;
         left: 0;
