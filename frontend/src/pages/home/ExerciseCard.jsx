@@ -17,17 +17,22 @@ function ExerciseCard(){
     
 
     let fetchExercises=async()=>{
+
+        try{
+        const res=await axios.get(`${RESOURCE_API_END_POINT}`)
+                if(res.data.success){
         await axios.get(`${RESOURCE_API_END_POINT}`,{withCredentials:true})
         .then((res)=>{
             if(res.data.success){
                 setIsExercise(res.data.data);
-            }
-           
-        })
-        .catch((e)=>{
-            toast.error(e.message);
-        })
+            }    
+        }
+        catch(error){
+            toast.error(error.message);
+        }
     }
+
+    if(isExercise.length<=0){ return <div  className='text-start p-20 h-screen text-2xl font-bold'><h1>Loading...</h1></div>}
 
     if(isExercise.length<=0){ return <div  className='text-start p-20 h-screen text-2xl font-bold'><h1>Loading...</h1></div>}
 
