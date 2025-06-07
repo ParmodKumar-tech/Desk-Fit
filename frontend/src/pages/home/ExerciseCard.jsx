@@ -19,10 +19,7 @@ function ExerciseCard(){
     let fetchExercises=async()=>{
 
         try{
-        const res=await axios.get(`${RESOURCE_API_END_POINT}`)
-                if(res.data.success){
-        await axios.get(`${RESOURCE_API_END_POINT}`,{withCredentials:true})
-        .then((res)=>{
+        const res= await axios.get(`${RESOURCE_API_END_POINT}`,{withCredentials:true});
             if(res.data.success){
                 setIsExercise(res.data.data);
             }    
