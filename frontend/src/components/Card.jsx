@@ -14,10 +14,6 @@ export default function Card(props) {
         <p className='w-[80%] mx-auto' >{props.value.duration}</p>
         </div>
         
-        <div>
-          <button>Edit</button>
-          <button>Delete</button>
-        </div>
         </Link>
 
         
