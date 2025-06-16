@@ -31,8 +31,6 @@ function ExerciseCard(){
 
     if(isExercise.length<=0){ return <div  className='text-start p-20 h-screen text-2xl font-bold'><h1>Loading...</h1></div>}
 
-    if(isExercise.length<=0){ return <div  className='text-start p-20 h-screen text-2xl font-bold'><h1>Loading...</h1></div>}
-
     return(
         <>
         
