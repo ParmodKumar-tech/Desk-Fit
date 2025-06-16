@@ -11,7 +11,7 @@ const PORT=process.env.PORT || 4000;
 
 connectDB();
 
-app.use(cors());
+app.use(cors({origin:"https://desk-fit-backend.vercel.app", credentials:true}));
 app.use(express.json());
 
 app.use("/api/v1/",ExerciseRoute);
