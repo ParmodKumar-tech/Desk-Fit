@@ -11,10 +11,7 @@ export const useAuth=()=>{
 export const AuthProvider=({children})=>{
     const [currentUserId,setCurrentUserId]=useState(null);
     const [currentUserEmail,setCurrentUserEmail]=useState(null);
-
-    useEffect(()=>{
-       getCurrUser();
-    },[])
+    
     
     
     const value={
