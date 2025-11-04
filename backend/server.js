@@ -5,7 +5,7 @@ import ExerciseRoute from "./routes/execrise.js";
 import UserRoute from "./routes/user.js";
 import CustomError from "./utils/customError.js";
 import error from "./controllers/error.js";
-
+import "dotenv/config";
 const app=express();
 const PORT=process.env.PORT || 4000;
 
