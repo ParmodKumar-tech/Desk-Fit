@@ -59,7 +59,7 @@ export default function AddExercise() {
                 return value && value.type === "image/gif";
             }),
         url: Yup.string().required("*Required"),
-        duration: Yup.string().required("*Required"),                                      // here through the .test i want to check that if one items is exists in array , so it free form validation error. this is actually i want please provide me code for this??
+        duration: Yup.string().required("*Required"),                               
         
         instructions: Yup.array()
         .of(Yup.string())
