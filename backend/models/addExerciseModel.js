@@ -1,10 +1,20 @@
 import mongoose from "mongoose";
 
 const addExerciseSchema=mongoose.Schema({
-    name:{type:String, required:[true,"name is required field!"]},
-    duration:{type:String, required:[true,"duration is required field!"]},
-    gifAnimation:String,
-    url:String,
+    name:{
+        type:String, 
+        required:[true,"name is required field!"]
+    },
+    duration:{
+        type:String, 
+        required:[true,"duration is required field!"]
+    },
+    gifAnimation:{
+        type:String
+    },
+    url:{
+        type:String
+    },
     instructions:[],
     focusArea:[],
     commonMistakes:[],

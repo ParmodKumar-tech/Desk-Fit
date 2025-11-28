@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { useNavigate,useRoutes } from 'react-router-dom';
+import { useLocation, useNavigate,useRoutes, } from 'react-router-dom';
 import { useAuth } from './authContent';
 import Signup from './pages/joinUs/Signup';
 import Login from './pages/joinUs/Login';
@@ -7,26 +7,26 @@ import NotFound from './pages/notFound/NotFound';
 import AddExercisePage from './pages/addExercise/AddExercisePage';
 import HomePage from './pages/home/HomePage';
 import { ExerciseHelper } from './pages/exercise/ExerciseHelper';
+import toast from 'react-hot-toast';
 
 
 const PageRoutes=()=>{
-    const {currentUserId,setCurrentUserId}=useAuth();
+    const {currentUserToken}=useAuth();
     const navigate=useNavigate();
+    const location=useLocation();
     
+    const publicRoute=new Set(['/','/login','/signup']);
+
     useEffect(()=>{
-        const userIdFromStorage=localStorage.getItem("userId");
 
-        if(userIdFromStorage && !currentUserId){
-            setCurrentUserId(userIdFromStorage);
-        }
+        if(publicRoute.has(location.pathname)) return;
 
-        if(!userIdFromStorage && window.location.pathname=="/exercise"){
+        if(!currentUserToken ){
+            toast.error("User not logined!");
             navigate("/login");
         }
-        if(userIdFromStorage && window.location.pathname=='/login'){
-            navigate("/")
-        }
-    },[currentUserId,navigate,setCurrentUserId]); // if any of these value is change , it do reload...
+       
+    },[currentUserToken,navigate]);
 
     let elements=useRoutes([
         {path:'/', element:<HomePage/>},

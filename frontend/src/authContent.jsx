@@ -1,7 +1,6 @@
-import axios from 'axios';
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { USER_API_END_POINT } from './utils/EndPoint';
-import toast from 'react-hot-toast';
+import { useEffect } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
+
 const AuthContent=createContext();
 
 export const useAuth=()=>{
@@ -9,40 +8,31 @@ export const useAuth=()=>{
 }
 
 export const AuthProvider=({children})=>{
-    const [currentUserId,setCurrentUserId]=useState(null);
-    const [currentUserName,setCurrentUserName]=useState(null);
-    const [currentUserEmail,setCurrentUserEmail]=useState(null);
-
+    const [currentUserId,setCurrentUserId]=useState(localStorage.getItem("userId"));
+    const [currentUserToken,setCurrentUserToken]=useState(localStorage.getItem("token"));
+    const [currentUsername,setCurrentUsername]=useState(localStorage.getItem("username"));
+    
     useEffect(()=>{
-       getCurrUser();
+    if(currentUserId && currentUserToken && currentUsername ){
+        setCurrentUserId(currentUserId);
+        setCurrentUserToken(currentUserToken);
+        setCurrentUsername(currentUsername);
+    }
     },[])
     
-    const getCurrUser=async()=>{
-        try{
-            const res=await axios.get(`${USER_API_END_POINT}/curr-user`,{withCredentials:true});
-            if(res.data.success){
-                setCurrentUserEmail(res.data.email);
-                setCurrentUserId(res.data.id);
-                setCurrentUserName(res.data.username);
-            }
-        }
-        catch(err){
-            toast.error(err.response.data.message);
-        }
-       
-        
-    }
-
-    const value={
+    const value=useMemo(()=>({
+        currentUserToken,
+        setCurrentUserToken,
         currentUserId,
         setCurrentUserId,
+        currentUsername,
+        setCurrentUsername
 
-        currentUserName,
-        currentUserEmail,
-        setCurrentUserEmail
-    }
+    }),[currentUserId,currentUserToken,currentUsername])
     
-    return <AuthContent.Provider value={value}>{children}</AuthContent.Provider>
+    return <AuthContent.Provider value={value}>
+            {children}
+            </AuthContent.Provider>
 
 
 }

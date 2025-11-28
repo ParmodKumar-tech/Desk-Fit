@@ -1,46 +1,51 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { Formik,Form,ErrorMessage,Field} from 'formik';
 import * as Yup from 'yup';
-import { USER_API_END_POINT } from '../../utils/EndPoint';
+
 import { useAuth } from '../../authContent';
+import { login } from '../../api/api.user';
 
 function Login() {
 
-    const nagivate=useNavigate();
+    const navigate=useNavigate();
  
     const [loading,setLoading]=useState(false);
-    const {setCurrentUserId,setCurrentUserEmail}=useAuth();
+    const {
+        setCurrentUserId,
+        setCurrentUserToken,
+        setCurrentUsername
+    }=useAuth();
+
+    const inputFields=[
+        {label:"Email", name:"email"},
+        {label:"Password", name:"password"}
+    ]
+
 
     let handleForm=async(formData)=>{
         setLoading(true);
 
-        try{
-            const res=await axios.post(`${USER_API_END_POINT}/login`,formData,{withCredentials:true});
-                
-                if(res.data.success){
-                    localStorage.setItem("token",res.data.token);
-                    localStorage.setItem("userId",res.data.userId);
-                    localStorage.setItem("username",res.data.username);
-                    localStorage.setItem("emailId",res.data.useremail);
+        const Login=await login(formData);
+        setLoading(false);
 
-                    setCurrentUserId(res.data.userId);
-                    setCurrentUserEmail(res.data.useremail);
+        if(Login.success){
+        toast.success(Login.message);
+        localStorage.setItem("userId",Login.userId);
+        localStorage.setItem("username",Login.username);
+        localStorage.setItem("token",Login.token);
 
-                    toast.success(res.data.message);
-                    nagivate('/')
-                    
-                }
-    
-        }
-        catch(e){
-            toast.error(e.response.data.message);
-            setLoading(false);
+        setCurrentUserToken(Login.token);
+        setCurrentUserId(Login.userId);
+        setCurrentUsername(Login.username);
+        navigate('/');
+        return;
         }
 
+        toast.error(Login?.message || Login);
+        
         
     }
 
@@ -52,7 +57,6 @@ function Login() {
 
     return (
         <Formik
-       
         initialValues={{email:'',password:''}}
         validationSchema={validate}
         onSubmit={handleForm}
@@ -63,18 +67,18 @@ function Login() {
             <Form className='flex flex-col justify-center '>
 
             <h2 className='font-semibold text-4xl my-5'>Login! | DeskFit</h2>
+            
+            {inputFields.map((field,id)=>(
+            <React.Fragment key={id}>
             <div className='flex gap-1'>
-            <label htmlFor="email" className='font-semibold'>Email</label>
-            <ErrorMessage name='email' component="div" className='text-red-500' />
+            <label htmlFor={field.name} className='font-semibold'>{field.label}</label>
+            <ErrorMessage name={field.name} component="div" className='text-red-500' />
             </div>
 
-            <Field  id="email" className='rounded border  p-1 border-blue-500 my-2' type="email" placeholder="enter email" name="email" />
-            <div className='flex gap-1'>
-            <label htmlFor="password" className='font-semibold'>Password</label>
-            <ErrorMessage name='password' component="div" className='text-red-500' />
-            </div>
-            <Field id="password"  className='rounded p-1 border border-blue-500 my-2' type="password" name="password" placeholder="password" />
-            
+            <Field  id={field.name} className='rounded border  p-1 border-blue-500 my-2' type={field.name=="email"?"email":"text"} placeholder={field.name} name={field.name} />
+           </React.Fragment>
+            ))}
+           
             <button disabled={loading} className=' my-1 rounded bg-[#0077ff] text-white p-1 font-semibold' type='submit'>{loading?"Loading...":"Login"}</button>
             <Link to={"/signup"} >New User, <span className='text-decoration-line: underline font-bold'>Register Now!</span></Link>
             </Form>

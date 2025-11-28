@@ -1,42 +1,44 @@
-import React, { useState } from 'react';
-import {Link, NavLink } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import {Link, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../authContent';
 import './Navbar.css';  
 
 function Navbar(){
+    const navigate=useNavigate();
     const [menuItems,setMenuItems]=useState(false);
-    const {currentUserName,setCurrentUserName}=useAuth();
-
-    const handleLogout=()=>{
+    const {
+        currentUsername,
+        setCurrentUsername,
+        setCurrentUserToken,
+    }=useAuth();
+    
+    const handleLogout=useCallback(()=>{
         localStorage.removeItem("token");
         localStorage.removeItem("emailId");
         localStorage.removeItem("userId");
         localStorage.removeItem("username");
-        
-        setCurrentUser(null);
-        setCurrentUserName(null);
-        window.location.reload();
-    }
+        setCurrentUsername(null);
+        setCurrentUserToken(null);
+        navigate("/");
+
+    },[currentUsername])
 
 
-    let handleMenuItems=()=>{
-        setMenuItems(!menuItems);
-    }
+    let handleMenuItems=useCallback(()=>{
+        setMenuItems((prev)=>!prev);
+    },[])
 
     return(
-       <header className='header flex bg-zinc-800 w-full p-5 z-10 items-center justify-around xl:justify-between px-10'>
+       <header className='header flex bg-zinc-800 w-full p-3 z-10 items-center justify-around xl:justify-between px-10'>
         <Link to="/"><h2 className='font-bold text-3xl mx-2'>DeskFit</h2></Link>
         <nav className={menuItems?"nav-visible":"nav"}>
             <ul className='nav-items'>
                 
                 <li><NavLink to="/">Home</NavLink></li>
-                
-                
-                {currentUserName?
+                {currentUsername?
                 <>
                 <li><NavLink to="/exercise" >Add Exercise</NavLink></li>
-                <li><NavLink to="/edit-delete">Edit/Delete</NavLink></li>
-                <li onClick={handleLogout}><NavLink to="/login">Logout</NavLink></li>
+                <li onClick={handleLogout}><NavLink to="/logout">Logout</NavLink></li>
                 </>
                 :
                 
@@ -46,7 +48,7 @@ function Navbar(){
                     
                 <p className='separator my-auto font-bold'>|</p>
                 <p className='username align-middle my-auto mx-2'>
-                {currentUserName?currentUserName:"Not login"}</p>
+                {currentUsername?currentUsername:"Not login"}</p>
 
             </ul>
 
@@ -56,7 +58,7 @@ function Navbar(){
         <p onClick={handleMenuItems} 
         style={{cursor:'pointer', 
         textDecoration:'underline'}}
-        >Close</p>
+        >✖</p>
         :
         <div 
         className='menu-icon' 
@@ -73,4 +75,4 @@ function Navbar(){
     )
 }
 
-export default Navbar;
+export default React.memo(Navbar);

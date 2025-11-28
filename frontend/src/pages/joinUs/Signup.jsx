@@ -1,41 +1,47 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { Formik,Form,Field,ErrorMessage  } from 'formik';
 import * as Yup from 'yup'; 
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../authContent';
-import { USER_API_END_POINT } from '../../utils/EndPoint';
+import { signup } from '../../api/api.user';
 
 
 function Signup() {
     
     const [loading,setLoading]=useState(false);
-    const {setCurrentUserId,setCurrentUserEmail}=useAuth();
+    const {
+        setCurrentUserId,
+        setCurrentUserToken,
+        setCurrentUsername
+    }=useAuth();
+
     const navigate=useNavigate();
+    console.log("Signup render");
+    const inputFields=[
+        {label:"Username", name:"username"},
+        {label:"Email", name:"email"},
+        {label:"Password", name:"password"}
+    ]
 
     let handleForm=async(formData)=>{
         setLoading(true);
-        try{
-            const res=await axios.post(`${USER_API_END_POINT}/signup`,formData,{withCredentials:true})
+        const Signup=await signup(formData);
+        setLoading(false);
         
-            if(res.data.success){
-                    toast.success(res.data.message);
-                    localStorage.setItem("token",res.data.token);
-                    localStorage.setItem("userId",res.data.userId);
-                    localStorage.setItem("emailId",res.data.useremail);
-                    localStorage.setItem("username",res.data.username);
-                    setCurrentUserId(res.data.userId);
-                    setCurrentUserEmail(res.data.useremail);
+        if(Signup.success){
+        localStorage.setItem("userId",Signup.userId);
+        localStorage.setItem("token",Signup.token);
+        localStorage.setItem("username",Signup.username);
+        setCurrentUserToken(Signup.token);
+        setCurrentUserId(Signup.userId);
+        setCurrentUsername(Signup.username);
+        toast.success(Signup.message);
+        navigate('/');
+        return;
+        }
+        toast.error(Signup?.message || Signup);
 
-                    navigate('/');
-            }
-            setLoading(false);
-        }
-        catch(error){
-            toast.error(error.response.data.message); 
-            setLoading(false);
-        }
           
     }
 
@@ -59,35 +65,28 @@ function Signup() {
             <div className='w-[80%] h-[80vh]  mt-[2rem] flex items-center justify-center mx-auto md:w-[50%]'>
             <Form className='flex flex-col justify-center'>
             <h2 className='font-semibold text-4xl my-5'>SignUp to join Us</h2>
+            
+            {inputFields.map((field,id)=>(
+            
+            <React.Fragment key={id}>
             <div className='flex gap-1'>
-            <label htmlFor="username" className='font-semibold'>Username</label>
-            <ErrorMessage name="username" component="div" className="text-red-500 " />
+            <label htmlFor={field.name} className='font-semibold'>{field.label}</label>
+            <ErrorMessage name={field.name} component="div" className="text-red-500 " />
             </div>
             
-            <Field  id="username" className='rounded border  p-1 border-blue-500 my-2' 
-                    type="text" 
-                    placeholder='username' 
-                    name='username' />
+            <Field  id={field.name} 
+            className='rounded border  p-1 border-blue-500 my-2' 
+            type={field.name=="email"?"email":"text"} 
+            placeholder={field.name}
+            name={field.name} />
+            </React.Fragment>
 
-            <div className='flex gap-1'>
-            <label htmlFor="email" className='font-semibold'>Email</label>
-            <ErrorMessage name="email" component="div" className="text-red-500" />
-            </div>
-            <Field   id="email" className='rounded border  p-1 border-blue-500 my-2' type="text" placeholder='enter email'name='email' />
-
-            <div className='flex gap-1'>
-            <label htmlFor="password" className='font-semibold'>Password</label>
-            <ErrorMessage name="password" component="div" className="text-red-500" />
-            </div>
-            <Field  id="password" className='rounded p-1 border border-blue-500 my-2' type="password" name="password" placeholder='password' />
-
+            ))}
+            
             <button disabled={loading} className='rounded bg-[#0077ff] text-white p-1 my-1 font-semibold' type='submit'>{loading?"Loading...":"Sign up"}</button>
             <Link to={"/login"} >Already have an account, <span className='text-decoration-line: underline font-bold'>Login</span></Link>
-            
             </Form>
         </div>
-
-
         )}
      
         </Formik>  

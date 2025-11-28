@@ -9,8 +9,8 @@ import Navbar from './components/Navbar';
 
 createRoot(document.getElementById('root')).render(
  <>
-  <AuthProvider>
   <div className='toaster'><Toaster  position="top-center"/></div>
+  <AuthProvider>
     <BrowserRouter>
       <Navbar/>
       <PageRoutes/>

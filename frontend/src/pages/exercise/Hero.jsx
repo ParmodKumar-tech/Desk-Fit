@@ -4,23 +4,20 @@ import ReactPlayer from 'react-player';
 
 export default function Hero(props) {
     const [howtodobtnclick, setHowtodobtnclick]=useState(false);
-
     const [animationbtnclick, setAnimationbtnclick]=useState(true);
   
 
     let handleHowtodobtn=()=>{
-        if(!howtodobtnclick){
-            setHowtodobtnclick(true);
-            setAnimationbtnclick(false)
-        }
+      if(howtodobtnclick) return;
+      setHowtodobtnclick(true);
+      setAnimationbtnclick(false);
         
     }
     
     let handleAnimation=()=>{
-        if(!animationbtnclick){
-            setAnimationbtnclick(true);
-            setHowtodobtnclick(false);
-        }
+        if(animationbtnclick) return;
+        setAnimationbtnclick(true);
+        setHowtodobtnclick(false);
        
     
     }
