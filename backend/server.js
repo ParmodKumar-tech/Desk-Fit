@@ -6,14 +6,13 @@ import UserRoute from "./routes/user.js";
 import CustomError from "./utils/customError.js";
 import error from "./controllers/error.js";
 import "dotenv/config";
-
 const app=express();
 const PORT=process.env.PORT || 4000;
 
 connectDB();
 
 app.use(cors({
-  origin:"http://localhost:5173",
+  origin:process.env.FRONTEND_URL,
   methods:["GET","POST"]
 }));
 

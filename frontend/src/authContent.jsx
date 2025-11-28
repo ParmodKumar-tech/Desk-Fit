@@ -28,7 +28,13 @@ export const AuthProvider=({children})=>{
         currentUsername,
         setCurrentUsername
 
+<<<<<<< HEAD
     }),[currentUserId,currentUserToken,currentUsername])
+=======
+        currentUserEmail,
+        setCurrentUserEmail
+    }
+>>>>>>> 67ede1efa25aa4ef9ac2bffb702db3db8a84224b
     
     return <AuthContent.Provider value={value}>
             {children}
