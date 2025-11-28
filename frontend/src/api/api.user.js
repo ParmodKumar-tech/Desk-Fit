@@ -1,7 +1,5 @@
-
-// export const USER_API_END_POINT="https://desk-fit-backend.vercel.app/api/v1/user";
-export const  USER_API_END_POINT="http://localhost:4000/api/v1";
 import axios from "axios";
+export const USER_API_END_POINT="https://desk-fit-backend.vercel.app/api/v1/user";
 
 export const signup=async(formData)=>{
        try{
