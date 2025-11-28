@@ -15,7 +15,7 @@ export const getAllExecrise= async()=>{
         }
 }
 
-export const getExercise=async(id,token)=>{
+export const getExercise=async(id)=>{
     try{
         const res=await axios.get(`${RESOURCE_API_END_POINT}/exercise-info/${id}`);
         if(res.data.success){
