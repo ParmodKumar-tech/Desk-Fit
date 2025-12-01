@@ -12,7 +12,7 @@ const PORT=process.env.PORT || 4000;
 connectDB();
 
 app.use(cors({
-  origin:process.env.FRONTEND_URL,
+  origin:'https://desk-fit.vercel.app',
   methods:["GET","POST"]
 }));
 
