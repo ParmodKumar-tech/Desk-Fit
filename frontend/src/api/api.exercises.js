@@ -1,11 +1,10 @@
 
 import axios from "axios";
-// export const RESOURCE_API_END_POINT="https://desk-fit-backend.vercel.app/api/v1";
-export const RESOURCE_API_END_POINT="http://localhost:4000/api/v1";
+export const RESOURCE_API_END_POINT="https://desk-fit-7grh-backend.vercel.app/api/v1";
 
 export const getAllExecrise= async()=>{
      try{
-        const res=await axios.get(`${RESOURCE_API_END_POINT}/`,{withCredentials:true});
+        const res=await axios.get(`${RESOURCE_API_END_POINT}/`);
                 if(res.data.success){
                 return res.data;
             }    
