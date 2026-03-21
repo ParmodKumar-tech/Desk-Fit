@@ -62,17 +62,21 @@ export default function AddExercise() {
 
   const handleSubmit = async (formData) => {
     setIsLoading(true);
-    let imageUrl = formData.gifAnimation;
-    if (imageUrl && imageUrl instanceof File) {
+    
+    let imageFile = formData.gifAnimation;
+    
+    if (imageFile && imageFile instanceof File) {
       const data = new FormData();
-      data.append("file", imageUrl);
+      data.append("file", imageFile);
       data.append("upload_preset", "DeskFit_gif");
       data.append("cloud_name", "dhrqts9ml");
+      
       const uploaded = await uploadImage(data);
-      imageUrl = uploaded; 
+      imageFile = uploaded; 
       
     }
-    const payload = { ...formData, gifAnimation: imageUrl };
+    const payload = { ...formData, gifAnimation: imageFile };
+    console.log(payload);
     const result = await addExercise(payload);
     setIsLoading(false);
     if (result) {

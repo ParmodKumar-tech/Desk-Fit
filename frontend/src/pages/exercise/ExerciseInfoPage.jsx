@@ -3,8 +3,10 @@ import Hero from './Hero';
 import { ExerciseHelper } from './ExerciseHelper';
 
 export default function ExerciseInfoPage(){
+    return(
     <>
     <Hero/>
     <ExerciseHelper/>
     </>
+    )
 }

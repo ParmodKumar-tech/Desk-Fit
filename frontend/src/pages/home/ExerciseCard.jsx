@@ -3,18 +3,24 @@ import Card from '../../components/Card';
 import { getAllExecrise } from '../../api/api.exercises';
 
 function ExerciseCard(){
-    const [isExercise,setIsExercise]=useState([]);
     
+    const [isExercise,setIsExercise]=useState([]);
+    const fetchExercises=async()=>{
+        const allExecrise=await getAllExecrise();
+        setIsExercise(allExecrise?.data ?? []);
+    }
+  
     useEffect(()=>{
         fetchExercises();
     },[])
 
-    const fetchExercises=async()=>{
-        const allExecrise=await getAllExecrise();
-        setIsExercise(allExecrise?.data);
+
+    if(isExercise.length===0){ 
+        return <div className='text-start p-20 h-[300vh] text-2xl font-bold'>
+            <h1>Loading...</h1>
+        </div>
     }
 
-    if(isExercise.length<=0){ return <div className='text-start p-20 h-[300vh] text-2xl font-bold'><h1>Loading...</h1></div>}
     
     return(
         <>        
@@ -27,8 +33,7 @@ function ExerciseCard(){
         })}
 
        </section>
-    
-   
+
    </>
     )
 }

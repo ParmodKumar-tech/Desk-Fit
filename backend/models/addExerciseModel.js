@@ -15,10 +15,10 @@ const addExerciseSchema=mongoose.Schema({
     url:{
         type:String
     },
-    instructions:[],
-    focusArea:[],
-    commonMistakes:[],
-    breathingTips:[]
+    instructions:[String],
+    focusArea:[String],
+    commonMistakes:[String],
+    breathingTips:[String]
 })
 
 const Exercise=mongoose.model("exercise",addExerciseSchema);

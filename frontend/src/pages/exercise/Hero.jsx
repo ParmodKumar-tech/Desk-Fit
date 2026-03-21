@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
+import { Activity } from 'react';
 import ReactPlayer from 'react-player';
 
 
 export default function Hero(props) {
     const [howtodobtnclick, setHowtodobtnclick]=useState(false);
     const [animationbtnclick, setAnimationbtnclick]=useState(true);
-  
+    
 
     let handleHowtodobtn=()=>{
       if(howtodobtnclick) return;
@@ -25,6 +26,7 @@ export default function Hero(props) {
 
 
   return (
+
     <section className='w-full h-[30rem] flex flex-col flex-wrap gap-2 justify-center sm:mt-5'>
       <div>
         <h2 className='text-black text-xl font-medium '>{props.value.name?props.value.name:"..."}</h2>
@@ -38,11 +40,28 @@ export default function Hero(props) {
                   alt='exercise-img'/>
                   </div>
                   }
-                  <div>
-                  {howtodobtnclick && <ReactPlayer  className="object-contain border border-black" url={props.value.url} controls={true} width="100%" height="20rem" />}
-                  </div>
+                  
+                  
+                <div 
+                  className={`transition-all duration-300 ease-in-out ${
+                    howtodobtnclick 
+                      ? 'visible h-[20rem] ' 
+                      : 'hidden'
+                  }`}
+                 
+                >
+                  <ReactPlayer  
+                    className="object-contain border border-black w-full" 
+                    url={props.value?.url} 
+                    controls={true} 
+                    width="100%" 
+                    height="20rem"
+                    playing={howtodobtnclick}
+                  />
+                </div>
+                
 
-                  <div className='flex flex-wrap justify-between lg:justify-around  gap-1 my-1'>
+                <div className='flex flex-wrap justify-between lg:justify-around  gap-1 my-1'>
                     <button 
                       onClick={handleAnimation} 
                       className={animationbtnclick ? 
@@ -59,9 +78,10 @@ export default function Hero(props) {
                         How to do
                     </button>
 
-                  </div>
+                </div>
       
     </section>
   
   )
+  
 }

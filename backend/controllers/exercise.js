@@ -22,6 +22,6 @@ export const exerciseInfo=async(req,res)=>{
 
 export const addExerciseInfo=async(req,res)=>{
     const addExerciseInfo=await Exercise.create({...req.body});
-    
+    console.log(addExerciseInfo);
     res.status(200).json({success:true,message:"Exercise added successfully"});
 }

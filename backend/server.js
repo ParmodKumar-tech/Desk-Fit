@@ -6,21 +6,23 @@ import UserRoute from "./routes/user.js";
 import CustomError from "./utils/customError.js";
 import error from "./controllers/error.js";
 import "dotenv/config";
+import cookieParser from "cookie-parser";
+
 const app=express();
 const PORT=process.env.PORT || 4000;
 
 connectDB();
-
+app.use(cookieParser());
 app.use(cors({
   origin:process.env.FRONTEND_URL,
-  methods:["GET","POST"]
+  methods:["GET","POST"],
+  credentials:true
 }));
 
 app.use(express.json());
 
 app.use("/api/v1",ExerciseRoute);
 app.use("/api/v1/user",UserRoute);
-
 app.use("*",(req,res,next)=>{
     const err=new CustomError(404,"Page Not Found!");
     next(err);

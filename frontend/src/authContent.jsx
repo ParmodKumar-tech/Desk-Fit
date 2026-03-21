@@ -31,8 +31,8 @@ export const AuthProvider=({children})=>{
     }),[currentUserId,currentUserToken,currentUsername])
     
     return <AuthContent.Provider value={value}>
-            {children}
-            </AuthContent.Provider>
+        {children}
+    </AuthContent.Provider>
 
 
 }

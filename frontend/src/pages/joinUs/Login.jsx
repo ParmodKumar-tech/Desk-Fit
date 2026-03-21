@@ -35,9 +35,6 @@ function Login() {
         toast.success(Login.message);
         localStorage.setItem("userId",Login.userId);
         localStorage.setItem("username",Login.username);
-        localStorage.setItem("token",Login.token);
-
-        setCurrentUserToken(Login.token);
         setCurrentUserId(Login.userId);
         setCurrentUsername(Login.username);
         navigate('/');

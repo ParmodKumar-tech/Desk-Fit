@@ -17,7 +17,7 @@ function Signup() {
     }=useAuth();
 
     const navigate=useNavigate();
-    console.log("Signup render");
+
     const inputFields=[
         {label:"Username", name:"username"},
         {label:"Email", name:"email"},
@@ -31,9 +31,7 @@ function Signup() {
         
         if(Signup.success){
         localStorage.setItem("userId",Signup.userId);
-        localStorage.setItem("token",Signup.token);
         localStorage.setItem("username",Signup.username);
-        setCurrentUserToken(Signup.token);
         setCurrentUserId(Signup.userId);
         setCurrentUsername(Signup.username);
         toast.success(Signup.message);

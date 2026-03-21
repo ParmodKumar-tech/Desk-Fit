@@ -8,6 +8,7 @@ import AddExercisePage from './pages/addExercise/AddExercisePage';
 import HomePage from './pages/home/HomePage';
 import { ExerciseHelper } from './pages/exercise/ExerciseHelper';
 import toast from 'react-hot-toast';
+import ExerciseInfoPage from './pages/exercise/ExerciseInfoPage';
 
 
 const PageRoutes=()=>{
@@ -21,10 +22,10 @@ const PageRoutes=()=>{
 
         if(publicRoute.has(location.pathname)) return;
 
-        if(!currentUserToken ){
-            toast.error("User not logined!");
-            navigate("/login");
-        }
+        // if(!currentUserToken ){
+        //     toast.error("User not logined!");
+        //     navigate("/login");
+        // }
        
     },[currentUserToken,navigate]);
 

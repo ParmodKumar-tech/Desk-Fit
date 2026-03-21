@@ -1,6 +1,7 @@
 import express from "express";
 import { exerciseInfo,showExercise,addExerciseInfo } from "../controllers/exercise.js";
 import wrapAsync from "../utils/wrapAsync.js";
+import { authVerify } from "../middlewares/auth.middleware.js";
 const router=express.Router({mergeParams:true})
 
 router
