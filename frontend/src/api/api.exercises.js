@@ -1,6 +1,6 @@
 
 import axios from "axios";
-export const RESOURCE_API_END_POINT="https://desk-fit-7grh-backend.vercel.app/api/v1";
+export const RESOURCE_API_END_POINT=import.meta.env.VITE_RESOURCE_API;
 
 export const getAllExecrise= async()=>{
      try{
